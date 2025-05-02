@@ -1,6 +1,7 @@
 # Virtual environments
 .venv/
 __pycache__/
+.gradio/
 *.pyc
 
 # API keys or config secrets
