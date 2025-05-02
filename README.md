@@ -47,8 +47,6 @@ uv pip install fastapi uvicorn python-multipart openai pydantic-ai gradio
 - OpenCage (Geolocation): Sign up at https://opencagedata.com/users/sign_up to create an account and obtain your API key.
 
 Once you've obtained these API keys, store them securely in your `config.py` file as follows:
-
-Once you've obtained these API keys, store them securely in your config.py file as follows:
 ```python
 OPENAI_API_KEY      = "<your-openai-key>"
 STABILITY_API_KEY   = "<your-stability-key>"
