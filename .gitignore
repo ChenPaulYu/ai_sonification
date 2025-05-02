@@ -1,0 +1,26 @@
+# Virtual environments
+.venv/
+__pycache__/
+*.pyc
+
+# API keys or config secrets
+config.py
+
+# Audio outputs
+*.mp3
+*.wav
+
+# Gradio or browser cache
+*.zip
+*.tar
+*.log
+*.tmp
+*.DS_Store
+
+# VSCode, PyCharm, or IDE stuff
+.vscode/
+.idea/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
