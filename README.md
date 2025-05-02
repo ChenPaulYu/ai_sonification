@@ -15,7 +15,7 @@ Built with **FastAPI** + **Gradio** UI + **Stable Audio** + **OpenAI GPT-4o**, a
 
 ### 1. Clone the repository
 ```bash
-git clone <github link>
+git clone https://github.com/ChenPaulYu/ai_sonification.git
 cd ai_sonification
 ```
 
