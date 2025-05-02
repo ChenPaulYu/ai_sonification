@@ -12,7 +12,7 @@ def text2audio(
     steps: int = 50,
     cfg_scale: float = 7.0,
     output_format: str = "mp3",
-    stability_key: str = STABILITY_KEY,
+    stability_key: str = STABILITY_API_KEY,
 ) -> str:
     """
     Generate audio from a text prompt using Stability AI's Text-to-Audio API.

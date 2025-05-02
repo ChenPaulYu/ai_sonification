@@ -5,6 +5,7 @@ from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
 
 from config import OPENAI_API_KEY
+from utils  import load_prompt
 
 # === Pydantic Schema ===
 class WeatherInterpretation(BaseModel):
@@ -20,7 +21,7 @@ def create_weather_agent() -> Agent:
     return Agent(
         model=model,
         result_type=WeatherInterpretation,
-        system_prompt="You are a music prompt designer. Interpret weather data and optionally a journal entry to suggest a music generation prompt that reflects emotional and atmospheric conditions."
+        system_prompt=load_prompt("prompts/weather_music_system.txt")
     )
 
 # === Main Function ===
@@ -29,20 +30,13 @@ def interpret_weather_to_music_prompt(
     journal: Optional[str] = "",
     image_caption: Optional[str] = ""
 ) -> WeatherInterpretation:
-    """
-    Generate a music prompt based on weather data, journal entry, and optional image caption.
+    agent = Agent(
+        model=create_weather_agent().model,
+        result_type=WeatherInterpretation,
+        system_prompt=load_prompt("prompts/weather_music_system.txt")
+    )
 
-    Args:
-        weather: dict with keys: city, temperature, humidity, weather_main, weather_desc, wind_speed
-        journal: optional string (user's journal entry)
-        image_caption: optional string (description of uploaded image)
-
-    Returns:
-        WeatherInterpretation object
-    """
-    agent = create_weather_agent()
-
-    base_prompt = f"""
+    dynamic_context = f"""
     Location: {weather['city']}
     Temperature: {weather['temperature']} °C
     Weather: {weather['weather_main']} ({weather['weather_desc']})
@@ -51,30 +45,12 @@ def interpret_weather_to_music_prompt(
     """
 
     if journal.strip():
-        base_prompt += f"\n\nJournal entry:\n{journal.strip()}"
+        dynamic_context += f"\n\nJournal entry:\n{journal.strip()}"
 
     if image_caption.strip():
-        base_prompt += f"\n\nImage description:\n{image_caption.strip()}"
+        dynamic_context += f"\n\nImage description:\n{image_caption.strip()}"
 
-    base_prompt += """
-
-    Please reflect on the emotional and atmospheric tone that arises from this combination of weather, personal reflection, and visual context.
-
-    Then, provide:
-    1. A short, poetic or natural language summary that captures the mood and feel of the day.
-    2. Three evocative mood keywords that summarize this overall feeling.
-    3. A creative music generation prompt in the style of Stable Audio. Use rich musical language to describe the sound. You may follow this structure for clarity, but feel free to adjust creatively:
-
-    Format: [Solo/Band/Orchestra] |
-    Genre: [e.g., Ambient, Chillout, Hip Hop] |
-    Subgenre: [optional] |
-    Instruments: [e.g., synth pads, acoustic guitar, drum machine] |
-    Moods: [mood1, mood2, mood3] |
-    BPM: [optional] |
-    Additional descriptors: [optional, e.g., 'lo-fi texture', 'warm analog vibe']
-
-    The final music prompt should feel like a sonic interpretation of the day’s atmosphere.
-    """
+    base_prompt = dynamic_context + "\n\n" + load_prompt("prompts/weather_music_base.txt")
 
     result = agent.run_sync(base_prompt)
     return result.data

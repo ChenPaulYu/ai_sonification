@@ -7,6 +7,7 @@ from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic import BaseModel
 
+from utils  import load_prompt
 from config import OPENAI_API_KEY
 
 class ImageCaption(BaseModel):
@@ -24,16 +25,11 @@ def caption_image_with_gpt4o(image_path: str) -> str:
     provider = OpenAIProvider(api_key=api_key)
     model  = OpenAIModel(model_name="gpt-4o", provider=provider)
 
+    
     agent = Agent(
         model=model,
         result_type=ImageCaption,
-        system_prompt=(
-            "You are an expert image captioning agent. A user has uploaded an image that reflects their current context or environment. "
-            "Your task is to describe the image in one complete, natural sentence. Focus entirely on what can be visually observed. "
-            "Include key visual elements such as objects, setting, people, actions, posture, lighting, colors, spatial layout, and notable textures. "
-            "Do not infer the user's emotions or intentions—just describe the image with precise, concrete detail. "
-            "Your description will be combined with other user inputs to create an expressive audio experience."
-        )
+        system_prompt=load_prompt("prompts/image_caption.txt")
     )
 
 

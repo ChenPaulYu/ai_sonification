@@ -57,6 +57,18 @@ OPENWEATHER_API_KEY = "<your-openweather-key>"
 
 ---
 
+## 📂 Customizing Prompts
+
+You can freely edit the following text files to modify how the AI behaves:
+
+- `prompts/image_caption.txt` – Defines the system prompt used for describing uploaded images via GPT-4o
+- `prompts/weather_music_system.txt` – Defines the system prompt for translating emotional context from weather data, journal entries, or images into music
+- `prompts/weather_music_base.txt` – Defines the format and structure of the desired output. This includes instructions on how the model should summarize the mood, extract keywords, and construct a Stable Audio-style music generation prompt.
+
+These are plain `.txt` files and safe to edit, version, and experiment with.
+
+---
+
 ## 🚀 Running the API Server
 
 Use `uvicorn` to launch the FastAPI server:
@@ -80,6 +92,7 @@ python ui.py
 This will start a local web app at `http://localhost:7860`.
 
 ---
+
 
 ## 🔍 API Usage (Quick Guide)
 
