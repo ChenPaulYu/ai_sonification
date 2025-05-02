@@ -24,3 +24,7 @@ config.py
 # OS-generated files
 .DS_Store
 Thumbs.db
+
+# Audio and image outputs
+audio/*
+image/*
