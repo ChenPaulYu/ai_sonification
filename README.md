@@ -46,7 +46,8 @@ uv pip install fastapi uvicorn python-multipart openai pydantic-ai gradio
 - Stability AI (Stable Audio): Create an account at https://platform.stability.ai/. Once logged in, go to the API Keys section to generate your API key. 
 - OpenCage (Geolocation): Sign up at https://opencagedata.com/users/sign_up to create an account and obtain your API key.
 
-Once you've obtained these API keys, store them securely in your `config.py` file as follows:
+
+After obtaining the API keys, manually create a `config.py` file and add the following entries
 ```python
 OPENAI_API_KEY      = "<your-openai-key>"
 STABILITY_API_KEY   = "<your-stability-key>"
