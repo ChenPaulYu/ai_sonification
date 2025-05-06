@@ -1,7 +1,7 @@
 import requests
 from typing import Optional, Tuple
 
-from config import OPENCAGE_API
+from config import OPENCAGE_API_KEY
 
 def location_text_to_latlon(
     location_text: str,
@@ -16,12 +16,11 @@ def location_text_to_latlon(
     Returns:
         (lat, lon) tuple or None if not found
     """
-    api_key = OPENCAGE_API
 
     url = "https://api.opencagedata.com/geocode/v1/json"
     params = {
         "q": location_text,
-        "key": api_key,
+        "key": OPENCAGE_API_KEY,
         "limit": 1,
     }
 

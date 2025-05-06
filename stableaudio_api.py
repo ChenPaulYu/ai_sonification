@@ -11,8 +11,7 @@ def text2audio(
     seed: int = 0,
     steps: int = 50,
     cfg_scale: float = 7.0,
-    output_format: str = "mp3",
-    stability_key: str = STABILITY_API_KEY,
+    output_format: str = "mp3"
 ) -> str:
     """
     Generate audio from a text prompt using Stability AI's Text-to-Audio API.
@@ -30,12 +29,11 @@ def text2audio(
     Returns:
         str: Path to the saved audio file.
     """
-    STABILITY_KEY = stability_key or os.getenv("STABILITY_KEY")
-    if not STABILITY_KEY:
+    if not STABILITY_API_KEY:
         raise ValueError("Missing Stability API key. Pass it explicitly or set STABILITY_KEY env var.")
     response = requests.post(
         "https://api.stability.ai/v2beta/audio/stable-audio-2/text-to-audio",
-        headers={"Authorization": f"Bearer {STABILITY_KEY}", "Accept": "audio/*"},
+        headers={"Authorization": f"Bearer {STABILITY_API_KEY}", "Accept": "audio/*"},
         files={"image": None},
         data={
             "prompt" : prompt,
@@ -68,7 +66,6 @@ def audio2audio(
     cfg_scale: float = 7.0,
     strength: float = 1.0,
     output_format: str = "mp3",
-    stability_key: str = STABILITY_KEY,
 ) -> str:
     """
     Generate new audio from an existing audio file using Stability AI's Audio-to-Audio API.
@@ -88,15 +85,14 @@ def audio2audio(
     Returns:
         str: Path to the saved audio file.
     """
-    STABILITY_KEY = stability_key or os.getenv("STABILITY_KEY")
-    if not STABILITY_KEY:
+    if not STABILITY_API_KEY:
         raise ValueError("Missing Stability API key. Pass it explicitly or set STABILITY_KEY env var.")
 
     with open(audio_path, "rb") as audio_file:
         response = requests.post(
             "https://api.stability.ai/v2beta/audio/stable-audio-2/audio-to-audio",
             headers={
-                "Authorization": f"Bearer {STABILITY_KEY}",
+                "Authorization": f"Bearer {STABILITY_API_KEY}",
                 "Accept": "audio/*",
             },
             files={"audio": audio_file},
